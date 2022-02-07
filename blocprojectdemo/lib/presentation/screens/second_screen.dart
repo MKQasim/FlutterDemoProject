@@ -1,7 +1,4 @@
 import 'package:blocprojectdemo/businessLogic/cubits/cubit/cubit/counter_cubit.dart';
-import 'package:blocprojectdemo/presentation/screens/home_scrreen.dart';
-import 'package:blocprojectdemo/presentation/screens/second_screen.dart';
-import 'package:blocprojectdemo/presentation/screens/thirdScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,18 +14,8 @@ class SecondScreen extends StatefulWidget {
 }
 
 class _SecondScreenState extends State<SecondScreen> {
-  // int _counter = 0;
-
   void _moveNext() {
-    setState(() {
-      // _counter++;\
-      print('next screen');
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-              value: BlocProvider.of<CounterCubit>(context),
-              child: ThirdScreen(
-                  title: "Third Screen", color: Colors.redAccent))));
-    });
+    setState(() {});
   }
 
   @override
@@ -118,11 +105,24 @@ class _SecondScreenState extends State<SecondScreen> {
             SizedBox(
               height: 24,
             ),
-            MaterialButton(
-                child: Text('Go to Third Screen'),
-                color: Colors.red,
-                textColor: Colors.black,
-                onPressed: _moveNext)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                    child: Text(
+                      'Go To Third Screen',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: widget.color,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/third');
+                    }),
+                SizedBox(
+                  height: 24,
+                ),
+              ],
+            )
           ],
         ),
       ),

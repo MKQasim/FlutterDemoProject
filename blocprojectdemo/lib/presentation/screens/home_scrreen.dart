@@ -1,6 +1,4 @@
 import 'package:blocprojectdemo/businessLogic/cubits/cubit/cubit/counter_cubit.dart';
-import 'package:blocprojectdemo/presentation/screens/home_scrreen.dart';
-import 'package:blocprojectdemo/presentation/screens/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +6,6 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen(
       {Key? key, required String this.title, required Color this.color})
       : super(key: key);
-
   final String title;
   final Color color;
   @override
@@ -16,19 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // int _counter = 0;
-
-  void _moveNext() {
+  void _moveToSecond() {
     setState(() {
-      // _counter++;\
-      print('next screen');
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-              value: BlocProvider.of<CounterCubit>(context),
-              child: SecondScreen(
-                  title: "Second Screen", color: Colors.redAccent))));
+      print('Second screen');
+      Navigator.of(context).pushNamed('/second');
     });
   }
+
+  // void _moveToThird() {
+  //   setState(() {
+  //     print('Third screen');
+
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
                   },
-                  heroTag: Text("Increment"),
+                  heroTag: Text('${widget.title}'),
                   tooltip: 'Decrement',
                   child: Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: Text("Decrement"),
+                  heroTag: Text('${widget.title} #2'),
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
@@ -117,14 +114,45 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 24,
             ),
-            MaterialButton(
-                child: Text(
-                  'Go To Second Screen',
-                  style: TextStyle(color: Colors.white),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                    child: Text(
+                      'Go To Second Screen',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: widget.color,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/second');
+                    }),
+                SizedBox(
+                  height: 24,
                 ),
-                color: widget.color,
-                textColor: Colors.black,
-                onPressed: _moveNext)
+              ],
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                    child: Text(
+                      'Go To Third Screen',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: widget.color,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/third');
+                    }),
+                SizedBox(
+                  height: 24,
+                ),
+              ],
+            )
           ],
         ),
       ),

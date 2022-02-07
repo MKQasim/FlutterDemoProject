@@ -1,7 +1,9 @@
-import 'package:blocprojectdemo/presentation/screens/home_scrreen.dart';
+import 'package:blocprojectdemo/presentation/screens/second_screen.dart';
+import 'package:blocprojectdemo/presentation/screens/thirdScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'businessLogic/cubits/cubit/cubit/counter_cubit.dart';
+import 'presentation/screens/home_scrreen.dart';
 
 void main() {
   final CounterState counterState1 =
@@ -14,7 +16,14 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final CounterCubit _counterCubit = CounterCubit();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,138 +32,32 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: BlocProvider<CounterCubit>(
-        create: (context) => CounterCubit(),
-        child: HomeScreen(
-          title: 'Flutter Demo Home Page',
-          color: Colors.red,
-        ),
-      ),
+      routes: {
+        '/': (context) => BlocProvider.value(
+              value: _counterCubit,
+              child: HomeScreen(title: "Home Screen", color: Colors.blueAccent),
+            ),
+        '/second': (context) => BlocProvider.value(
+              value: _counterCubit,
+              child:
+                  SecondScreen(title: "Second Screen", color: Colors.redAccent),
+            ),
+        '/third': (context) => BlocProvider.value(
+              value: _counterCubit,
+              child:
+                  ThirdScreen(title: "Third Screen", color: Colors.greenAccent),
+            ),
+      },
     );
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _counterCubit.close();
+  }
 }
-
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen(
-//       {Key? key, required String this.title, required Color this.color})
-//       : super(key: key);
-
-//   final String title;
-//   final Color color;
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   // int _counter = 0;
-
-//   void _moveNext() {
-//     setState(() {
-//       // _counter++;\
-//       print('next screen');
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text(
-//               'You have pushed the button this many times:',
-//             ),
-//             BlocConsumer<CounterCubit, CounterState>(
-//               listener: (context, state) {
-//                 if (state.isIncremented == true) {
-//                   Scaffold.of(context).showSnackBar(SnackBar(
-//                     content: Text('Counter Value Incrimented'),
-//                     duration: Duration(milliseconds: 300),
-//                   ));
-//                 } else {
-//                   Scaffold.of(context).showSnackBar(SnackBar(
-//                     content: Text('Counter Value Decremented'),
-//                     duration: Duration(milliseconds: 300),
-//                   ));
-//                 }
-//               },
-//               builder: (context, state) {
-//                 switch (state.counterValue) {
-//                   case 0:
-//                     return Text(
-//                       'Number is Zero ' + state.counterValue.toString(),
-//                       style: Theme.of(context).textTheme.headline4,
-//                     );
-
-//                   case 1:
-//                     return Text(
-//                       'Number is Positive ' + state.counterValue.toString(),
-//                       style: Theme.of(context).textTheme.headline4,
-//                     );
-//                   case 2:
-//                     return Text(
-//                       'Number is Positive ' + state.counterValue.toString(),
-//                       style: Theme.of(context).textTheme.headline4,
-//                     );
-//                 }
-
-//                 if (state.counterValue < 0) {
-//                   return Text(
-//                     'Number is Nagitive ' + state.counterValue.toString(),
-//                     style: Theme.of(context).textTheme.headline4,
-//                   );
-//                 }
-
-//                 return Text(
-//                   'Number is Positive ' + state.counterValue.toString(),
-//                   style: Theme.of(context).textTheme.headline4,
-//                 );
-//               },
-//             ),
-//             SizedBox(
-//               height: 24,
-//             ),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//               children: [
-//                 FloatingActionButton(
-//                   onPressed: () {
-//                     BlocProvider.of<CounterCubit>(context).decrement();
-//                   },
-//                   tooltip: 'Decrement',
-//                   child: Icon(Icons.remove),
-//                 ),
-//                 FloatingActionButton(
-//                   onPressed: () {
-//                     BlocProvider.of<CounterCubit>(context).increment();
-//                   },
-//                   tooltip: 'Decrement',
-//                   child: Icon(Icons.add),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(
-//               height: 24,
-//             ),
-//             MaterialButton(color: Colors.amber, onPressed: () {})
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _moveNext,
-//         tooltip: 'Move Next',
-//         child: const Icon(Icons.next_plan),
-//       ),
-
-//       // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
 
 // Stream<int> boatStream() async* {
 //   for (int i = 1; i <= 10; i++) {
