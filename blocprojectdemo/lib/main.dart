@@ -1,3 +1,4 @@
+import 'package:blocprojectdemo/presentation/router/app_router.dart';
 import 'package:blocprojectdemo/presentation/screens/second_screen.dart';
 import 'package:blocprojectdemo/presentation/screens/thirdScreen.dart';
 import 'package:flutter/material.dart';
@@ -32,22 +33,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routes: {
-        '/': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child: HomeScreen(title: "Home Screen", color: Colors.blueAccent),
-            ),
-        '/second': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child:
-                  SecondScreen(title: "Second Screen", color: Colors.redAccent),
-            ),
-        '/third': (context) => BlocProvider.value(
-              value: _counterCubit,
-              child:
-                  ThirdScreen(title: "Third Screen", color: Colors.greenAccent),
-            ),
-      },
+      onGenerateRoute: AppRouter().onGenerateRoute,
     );
   }
 
