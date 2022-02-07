@@ -1,8 +1,16 @@
-import 'package:blocprojectdemo/cubit/cubit/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'BusinessLogic/cubits/cubit/cubit/counter_cubit.dart';
+import 'businessLogic/cubits/cubit/cubit/counter_cubit.dart';
 
 void main() {
+  final CounterState counterState1 =
+      CounterState(counterValue: 0, isIncremented: false);
+
+  final CounterState counterState2 =
+      CounterState(counterValue: 0, isIncremented: false);
+
+  print(counterState1 == counterState2);
   runApp(MyApp());
 }
 
@@ -17,21 +25,21 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider<CounterCubit>(
         create: (context) => CounterCubit(),
-        child: MyHomePage(title: 'Flutter Demo Home Page'),
+        child: HomeScreen(title: 'Flutter Demo Home Page'),
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomeScreen> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<HomeScreen> {
   int _counter = 0;
 
   void _incrementCounter() {
